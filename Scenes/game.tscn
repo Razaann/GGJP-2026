@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://blwbyp0isgdjq"]
+
+[node name="Game" type="Node2D" unique_id=1884318181]
+
+[node name="Hand" type="Node2D" parent="." unique_id=291156583]

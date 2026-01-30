@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c30fktaynsd5v"]
+
+[ext_resource type="Script" uid="uid://dad7cbvphmxth" path="res://Scripts/card_scene.gd" id="1_1eyib"]
+[ext_resource type="Texture2D" uid="uid://b3m4qo54od3gg" path="res://Assets/Image/CuteCards - asset pack/pixelCards/CuteCardsPixel.png" id="1_hn4tc"]
+
+[node name="Card Scene" type="Control" unique_id=1054401281]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = -360.0
+offset_right = -640.0
+offset_bottom = -360.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1eyib")
+
+[node name="CuteCardsPixel" type="Sprite2D" parent="." unique_id=844925657]
+position = Vector2(640, 360)
+scale = Vector2(2, 2)
+texture = ExtResource("1_hn4tc")
+region_enabled = true
+region_rect = Rect2(0, 0, 25, 36)
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
