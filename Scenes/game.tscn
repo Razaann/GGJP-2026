@@ -1,5 +1,18 @@
 [gd_scene format=3 uid="uid://blwbyp0isgdjq"]
 
+[ext_resource type="PackedScene" uid="uid://c30fktaynsd5v" path="res://Scenes/card_scene.tscn" id="1_ebmjs"]
+
 [node name="Game" type="Node2D" unique_id=1884318181]
 
-[node name="Hand" type="Node2D" parent="." unique_id=291156583]
+[node name="Card Scene" parent="." unique_id=1054401281 instance=ExtResource("1_ebmjs")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 640.0
+offset_top = 360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 1
+grow_vertical = 1
