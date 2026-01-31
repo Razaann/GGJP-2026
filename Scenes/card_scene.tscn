@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://c30fktaynsd5v"]
 
 [ext_resource type="Script" uid="uid://dad7cbvphmxth" path="res://Scripts/card_scene.gd" id="1_1eyib"]
-[ext_resource type="Texture2D" uid="uid://th3jx8ybrld0" path="res://Assets/Image/CuteCards - asset pack/pixelCards/CuteCardsPixel_outline.png" id="2_1eyib"]
+[ext_resource type="Texture2D" uid="uid://cglq10dt2tdur" path="res://Assets/Image/Cardd.png" id="2_1eyib"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b5yic"]
 atlas = ExtResource("2_1eyib")
-region = Rect2(0, 0, 25, 36)
+region = Rect2(0, 0, 24, 36)
 
 [node name="Card Scene" type="Control" unique_id=1054401281]
 custom_minimum_size = Vector2(25, 36)
@@ -21,7 +21,7 @@ script = ExtResource("1_1eyib")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="." unique_id=1915521237]
-custom_minimum_size = Vector2(25, 36)
+custom_minimum_size = Vector2(24, 36)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

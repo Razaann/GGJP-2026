@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://h7kbvqqlwlmj"]
+
+[ext_resource type="Texture2D" uid="uid://th3jx8ybrld0" path="res://Assets/Image/CuteCards - asset pack/pixelCards/CuteCardsPixel_outline.png" id="1_33ess"]
+
+[resource]
+atlas = ExtResource("1_33ess")
+region = Rect2(0, 0, 25, 36)
