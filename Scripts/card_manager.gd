@@ -25,9 +25,24 @@ func _input(event: InputEvent) -> void:
 			var card = _raycast_card_check()
 			if card:
 				is_dragging = card
+				is_dragging.z_index = 10
 				drag_offset = card.global_position - get_global_mouse_position()
 		else:
+			is_dragging.z_index = 0
 			is_dragging = null
+
+
+#func connect_card_signals(card):
+	#card.connect("hovered", on_hovered_over_card)
+	#card.connect("hovered_off", on_hovered_off_card)
+#
+#
+#func on_hovered_over_card(card):
+	#print("hovered")
+#
+#
+#func on_hovered_off_card(card):
+	#print("hovered_off")
 
 
 func _raycast_card_check():
