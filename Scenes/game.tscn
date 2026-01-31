@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://d02tb8rsik8lv"]
+
+[ext_resource type="Script" uid="uid://oroc1fj4pqdb" path="res://Scripts/game.gd" id="1_ebmjs"]
+[ext_resource type="Shader" uid="uid://dhplus0hof4wu" path="res://Scripts/game.gdshader" id="2_qxrlw"]
+[ext_resource type="PackedScene" uid="uid://gvfnynnibiwq" path="res://Scenes/player_chara.tscn" id="3_wrm1d"]
+[ext_resource type="PackedScene" uid="uid://dsb7f3ykmdwx3" path="res://Scenes/enemy_chara.tscn" id="4_3dryh"]
+[ext_resource type="Script" uid="uid://buobnvk3y6mx" path="res://Scripts/player_hand.gd" id="6_i6g32"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wrm1d"]
+shader = ExtResource("2_qxrlw")
+shader_parameter/speed = 0.5
+shader_parameter/density = 10.0
+shader_parameter/spiral_strength = 2.0
+shader_parameter/color_dark = Color(0.062622264, 0.062577285, 0.11445976, 1)
+shader_parameter/color_light = Color(0.3690607, 0.31475782, 0.3853072, 1)
+
+[node name="Game" type="Node2D" unique_id=596395048]
+script = ExtResource("1_ebmjs")
+
+[node name="Background" type="ColorRect" parent="." unique_id=679139964]
+material = SubResource("ShaderMaterial_wrm1d")
+custom_minimum_size = Vector2(1280, 720)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Characters" type="Node" parent="." unique_id=1679233564]
+
+[node name="PlayerChara" parent="Characters" unique_id=218262183 instance=ExtResource("3_wrm1d")]
+position = Vector2(160, 352)
+idle_scale_amount = 0.08
+
+[node name="EnemyChara" parent="Characters" unique_id=793926884 instance=ExtResource("4_3dryh")]
+position = Vector2(1120, 352)
+
+[node name="CardManager" type="Node2D" parent="." unique_id=182927379]
+
+[node name="PlayerHand" type="Node2D" parent="." unique_id=1300258234]
+script = ExtResource("6_i6g32")
+
+[node name="DrawButton" type="Button" parent="." unique_id=1113914503]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 640.0
+offset_top = 360.0
+offset_right = 718.0
+offset_bottom = 391.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press Me"
+
+[connection signal="pressed" from="DrawButton" to="." method="_on_draw_button_pressed"]

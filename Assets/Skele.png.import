@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddoxumya5oyn4"
-path="res://.godot/imported/Card 1-10.png-5b2c0485fac23c774a222440e0ac0723.ctex"
+uid="uid://cep8bx0avh8i3"
+path="res://.godot/imported/Skele.png-62f5d6e5874d4b1fd73967dc39dcd44a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Image/CuteCards - asset pack/Card 1-10.png"
-dest_files=["res://.godot/imported/Card 1-10.png-5b2c0485fac23c774a222440e0ac0723.ctex"]
+source_file="res://Assets/Skele.png"
+dest_files=["res://.godot/imported/Skele.png-62f5d6e5874d4b1fd73967dc39dcd44a.ctex"]
 
 [params]
 

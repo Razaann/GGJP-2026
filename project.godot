@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="GGJP 2026"
-run/main_scene="uid://cihjqbiqul3pi"
+config/name="Maskjacks"
+run/main_scene="uid://d02tb8rsik8lv"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -21,19 +21,10 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
-window/vsync/vsync_mode=0
 
 [dotnet]
 
-project/assembly_name="GGJP 2026"
-
-[input]
-
-left_mouse={
-"deadzone": 0.5,
-"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(712, 6),"global_position":Vector2(721, 54),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
-]
-}
+project/assembly_name="Maskjacks"
 
 [physics]
 
@@ -45,4 +36,3 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.2, 0.2, 0.2, 1)

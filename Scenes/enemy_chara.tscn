@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dsb7f3ykmdwx3"]
+
+[ext_resource type="Script" uid="uid://cnrix1eafjbc4" path="res://Scripts/enemy_chara.gd" id="1_nk8xn"]
+[ext_resource type="Texture2D" uid="uid://dby442a867d2d" path="res://Assets/Enemies.png" id="2_nk8xn"]
+
+[node name="EnemyChara" type="Node2D" unique_id=793926884]
+script = ExtResource("1_nk8xn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=307708523]
+texture = ExtResource("2_nk8xn")
+region_enabled = true
+region_rect = Rect2(384, 0, 192, 192)

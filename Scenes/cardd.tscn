@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://b2as0e6iees12"]
+
+[ext_resource type="Texture2D" uid="uid://sp3noy0ba300" path="res://Assets/Red Black Card.png" id="1_ha4an"]
+[ext_resource type="Script" uid="uid://23iydg4pwkup" path="res://Scripts/cardd.gd" id="1_ktny3"]
+[ext_resource type="FontFile" uid="uid://dghrmolca2aaa" path="res://Assets/Daydream DEMO.otf" id="2_el3cy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_el3cy"]
+size = Vector2(120, 180)
+
+[node name="Cardd" type="Node2D" unique_id=526318633]
+script = ExtResource("1_ktny3")
+
+[node name="CardSprite" type="Sprite2D" parent="." unique_id=2108832173]
+texture = ExtResource("1_ha4an")
+region_enabled = true
+region_rect = Rect2(0, 180, 120, 180)
+
+[node name="Number" type="Label" parent="CardSprite" unique_id=1302270339]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -88.0
+offset_right = -56.0
+offset_bottom = -92.0
+theme_override_fonts/font = ExtResource("2_el3cy")
+theme_override_font_sizes/font_size = 32
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="." unique_id=405300326]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1345203155]
+shape = SubResource("RectangleShape2D_el3cy")
