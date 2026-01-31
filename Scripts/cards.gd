@@ -12,8 +12,10 @@ var base_scale: Vector2
 var base_rotation: float
 var t := 0.0
 
-var is_dragging := false
+var card_manager
 
+var is_dragging := false
+	
 #signal hovered
 #signal hovered_off
 
@@ -23,7 +25,14 @@ func _ready() -> void:
 	base_position = position
 	base_scale = scale
 	base_rotation = rotation
-	#get_parent().connect_card_signals(self)
+
+
+func setup(manager):
+	card_manager = manager
+
+
+func set_base_position(pos: Vector2) -> void:
+	base_position = pos
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

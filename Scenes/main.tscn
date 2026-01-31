@@ -2,8 +2,8 @@
 
 [ext_resource type="Shader" uid="uid://g1s6gve1s7ua" path="res://Scripts/main.gdshader" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://kthfbutgkmf" path="res://Scripts/card_manager.gd" id="1_bo1nx"]
-[ext_resource type="PackedScene" uid="uid://byu442ctn2jqm" path="res://Scenes/cards.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://cmkru6dktvy18" path="res://Scenes/card_slots.tscn" id="4_jjvhh"]
+[ext_resource type="Script" uid="uid://bickskjiwbc6i" path="res://Scripts/player_hand.gd" id="4_kry3j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jjvhh"]
 shader = ExtResource("1_8gbba")
@@ -38,31 +38,16 @@ metadata/_edit_lock_ = true
 [node name="CardManager" type="Node2D" parent="." unique_id=393751040]
 script = ExtResource("1_bo1nx")
 
-[node name="Cards" parent="CardManager" unique_id=531720334 instance=ExtResource("1_jjgbg")]
-position = Vector2(280, 608)
+[node name="Slots" type="Node2D" parent="." unique_id=916146770]
 
-[node name="Cards2" parent="CardManager" unique_id=2023084313 instance=ExtResource("1_jjgbg")]
-position = Vector2(424, 608)
+[node name="CardSlots" parent="Slots" unique_id=457360084 instance=ExtResource("4_jjvhh")]
+position = Vector2(448, 360)
 
-[node name="Cards3" parent="CardManager" unique_id=1311853045 instance=ExtResource("1_jjgbg")]
-position = Vector2(568, 608)
-
-[node name="Cards4" parent="CardManager" unique_id=552747008 instance=ExtResource("1_jjgbg")]
-position = Vector2(712, 608)
-
-[node name="Cards5" parent="CardManager" unique_id=364586662 instance=ExtResource("1_jjgbg")]
-position = Vector2(856, 608)
-
-[node name="Cards6" parent="CardManager" unique_id=1495482422 instance=ExtResource("1_jjgbg")]
-position = Vector2(1000, 608)
-
-[node name="Node2D" type="Node2D" parent="." unique_id=916146770]
-
-[node name="CardSlots" parent="Node2D" unique_id=457360084 instance=ExtResource("4_jjvhh")]
-position = Vector2(496, 360)
-
-[node name="CardSlots2" parent="Node2D" unique_id=1243332040 instance=ExtResource("4_jjvhh")]
+[node name="CardSlots2" parent="Slots" unique_id=1243332040 instance=ExtResource("4_jjvhh")]
 position = Vector2(640, 360)
 
-[node name="CardSlots3" parent="Node2D" unique_id=324876280 instance=ExtResource("4_jjvhh")]
-position = Vector2(784, 360)
+[node name="CardSlots3" parent="Slots" unique_id=324876280 instance=ExtResource("4_jjvhh")]
+position = Vector2(832, 360)
+
+[node name="PlayerHand" type="Node2D" parent="." unique_id=1255785552]
+script = ExtResource("4_kry3j")
