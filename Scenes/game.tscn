@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://d02tb8rsik8lv"]
 
 [ext_resource type="Script" uid="uid://oroc1fj4pqdb" path="res://Scripts/game.gd" id="1_ebmjs"]
-[ext_resource type="Shader" uid="uid://dhplus0hof4wu" path="res://Scripts/game.gdshader" id="2_qxrlw"]
+[ext_resource type="Shader" path="res://Scripts/game.gdshader" id="2_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://gvfnynnibiwq" path="res://Scenes/player_chara.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://dsb7f3ykmdwx3" path="res://Scenes/enemy_chara.tscn" id="4_3dryh"]
+[ext_resource type="FontFile" uid="uid://dghrmolca2aaa" path="res://Assets/Daydream DEMO.otf" id="6_1l0tm"]
 [ext_resource type="Script" uid="uid://buobnvk3y6mx" path="res://Scripts/player_hand.gd" id="6_i6g32"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wrm1d"]
@@ -43,18 +44,29 @@ position = Vector2(1120, 352)
 [node name="PlayerHand" type="Node2D" parent="." unique_id=1300258234]
 script = ExtResource("6_i6g32")
 
-[node name="DrawButton" type="Button" parent="." unique_id=1113914503]
+[node name="UI" type="Node" parent="." unique_id=522070777]
+
+[node name="DrawButton" type="Button" parent="UI" unique_id=1113914503]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 640.0
-offset_top = 360.0
-offset_right = 718.0
-offset_bottom = 391.0
+offset_left = 384.0
+offset_top = 152.0
+offset_right = 576.0
+offset_bottom = 216.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Press Me"
+theme_override_fonts/font = ExtResource("6_1l0tm")
+text = "DRAW CARD"
 
-[connection signal="pressed" from="DrawButton" to="." method="_on_draw_button_pressed"]
+[node name="EndButton" type="Button" parent="UI" unique_id=263980982]
+offset_left = 1024.0
+offset_top = 608.0
+offset_right = 1216.0
+offset_bottom = 672.0
+theme_override_fonts/font = ExtResource("6_1l0tm")
+text = "END TURN"
+
+[connection signal="pressed" from="UI/DrawButton" to="." method="_on_draw_button_pressed"]

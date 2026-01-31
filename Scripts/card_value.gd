@@ -1,8 +1,8 @@
 extends Node2D
 
 # Card Number
-@onready var number_label: Label = $CardSprite/Number
-@onready var card_sprite: Sprite2D = $CardSprite
+@onready var number_label: Label = $TotalCardSprite2D/TotalNumberLabel
+@onready var card_sprite: Sprite2D = $TotalCardSprite2D
 var card_value: int = 0
 
 # Card Animation
@@ -19,12 +19,21 @@ func setup(value: int):
 	card_value = value
 	if not is_inside_tree(): await ready
 	number_label.text = str(value)
-	number_label.modulate = Color("#1a1a1a")
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	number_label.modulate = Color("#1a1a1a")
+	number_label.modulate = Color("#9e0000")
+
+
+func update_display(current_score: int):
+	number_label.text = "= " + str(current_score)
+	
+	# Visual Feedback: Turn RED if they bust
+	if current_score > 13:
+		number_label.modulate = Color("#9e0000")
+	else:
+		number_label.modulate = Color("#9e0000")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
