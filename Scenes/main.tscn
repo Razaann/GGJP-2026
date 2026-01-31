@@ -3,6 +3,7 @@
 [ext_resource type="Shader" uid="uid://g1s6gve1s7ua" path="res://Scripts/main.gdshader" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://kthfbutgkmf" path="res://Scripts/card_manager.gd" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://byu442ctn2jqm" path="res://Scenes/cards.tscn" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://cmkru6dktvy18" path="res://Scenes/card_slots.tscn" id="4_jjvhh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jjvhh"]
 shader = ExtResource("1_8gbba")
@@ -54,3 +55,14 @@ position = Vector2(856, 608)
 
 [node name="Cards6" parent="CardManager" unique_id=1495482422 instance=ExtResource("1_jjgbg")]
 position = Vector2(1000, 608)
+
+[node name="Node2D" type="Node2D" parent="." unique_id=916146770]
+
+[node name="CardSlots" parent="Node2D" unique_id=457360084 instance=ExtResource("4_jjvhh")]
+position = Vector2(496, 360)
+
+[node name="CardSlots2" parent="Node2D" unique_id=1243332040 instance=ExtResource("4_jjvhh")]
+position = Vector2(640, 360)
+
+[node name="CardSlots3" parent="Node2D" unique_id=324876280 instance=ExtResource("4_jjvhh")]
+position = Vector2(784, 360)
