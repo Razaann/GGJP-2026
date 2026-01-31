@@ -28,7 +28,7 @@ func draw_card():
 	new_card.setup(random_value)
 	
 	# 2. Define Positions
-	var final_x = card_count * 150
+	var final_x = 900 - (card_count * 150)
 	var final_y = 600
 	var start_y = 800 # Start below the screen
 	
@@ -69,5 +69,5 @@ func update_score():
 		score_ui_instance.update_display(total_score)
 
 
-func _on_draw_button_pressed() -> void:
+func _on_draw_buttonn_pressed() -> void:
 	draw_card()

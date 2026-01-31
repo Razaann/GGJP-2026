@@ -4,8 +4,8 @@
 [ext_resource type="Shader" path="res://Scripts/game.gdshader" id="2_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://gvfnynnibiwq" path="res://Scenes/player_chara.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://dsb7f3ykmdwx3" path="res://Scenes/enemy_chara.tscn" id="4_3dryh"]
-[ext_resource type="FontFile" uid="uid://dghrmolca2aaa" path="res://Assets/Daydream DEMO.otf" id="6_1l0tm"]
 [ext_resource type="Script" uid="uid://buobnvk3y6mx" path="res://Scripts/player_hand.gd" id="6_i6g32"]
+[ext_resource type="Texture2D" uid="uid://esuj0jhfelue" path="res://Assets/LongButtonn.png" id="7_1l0tm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wrm1d"]
 shader = ExtResource("2_qxrlw")
@@ -14,6 +14,31 @@ shader_parameter/density = 10.0
 shader_parameter/spiral_strength = 2.0
 shader_parameter/color_dark = Color(0.062622264, 0.062577285, 0.11445976, 1)
 shader_parameter/color_light = Color(0.3690607, 0.31475782, 0.3853072, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v158k"]
+atlas = ExtResource("7_1l0tm")
+region = Rect2(0, 0, 192, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h4fw4"]
+load_path = "res://.godot/imported/LongButtonn.png-8ea282f3c4dbab73085f7ffa6ea6aef2.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ldgsr"]
+atlas = SubResource("CompressedTexture2D_h4fw4")
+region = Rect2(0, 64, 192, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1l0tm"]
+load_path = "res://.godot/imported/LongButtonn.png-8ea282f3c4dbab73085f7ffa6ea6aef2.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4fw4"]
+atlas = SubResource("CompressedTexture2D_1l0tm")
+region = Rect2(192, 0, 192, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ldgsr"]
+load_path = "res://.godot/imported/LongButtonn.png-8ea282f3c4dbab73085f7ffa6ea6aef2.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5yvi"]
+atlas = SubResource("CompressedTexture2D_ldgsr")
+region = Rect2(192, 64, 192, 64)
 
 [node name="Game" type="Node2D" unique_id=596395048]
 script = ExtResource("1_ebmjs")
@@ -46,7 +71,24 @@ script = ExtResource("6_i6g32")
 
 [node name="UI" type="Node" parent="." unique_id=522070777]
 
-[node name="DrawButton" type="Button" parent="UI" unique_id=1113914503]
+[node name="EndButton" type="TextureButton" parent="UI" unique_id=1499192863]
+custom_minimum_size = Vector2(192, 64)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 384.0
+offset_top = 248.0
+offset_right = 576.0
+offset_bottom = 312.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("AtlasTexture_v158k")
+texture_pressed = SubResource("AtlasTexture_ldgsr")
+
+[node name="DrawButtonn" type="TextureButton" parent="UI" unique_id=385861232]
+custom_minimum_size = Vector2(192, 64)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -58,15 +100,7 @@ offset_right = 576.0
 offset_bottom = 216.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("6_1l0tm")
-text = "DRAW CARD"
+texture_normal = SubResource("AtlasTexture_h4fw4")
+texture_pressed = SubResource("AtlasTexture_o5yvi")
 
-[node name="EndButton" type="Button" parent="UI" unique_id=263980982]
-offset_left = 1024.0
-offset_top = 608.0
-offset_right = 1216.0
-offset_bottom = 672.0
-theme_override_fonts/font = ExtResource("6_1l0tm")
-text = "END TURN"
-
-[connection signal="pressed" from="UI/DrawButton" to="." method="_on_draw_button_pressed"]
+[connection signal="pressed" from="UI/DrawButtonn" to="." method="_on_draw_buttonn_pressed"]

@@ -27,13 +27,15 @@ func _ready() -> void:
 
 
 func update_display(current_score: int):
-	number_label.text = "= " + str(current_score)
+	#number_label.text = "= " + str(current_score)
+	number_label.text = str(current_score)
+	number_label.modulate = Color("#9e0000")
 	
 	# Visual Feedback: Turn RED if they bust
-	if current_score > 13:
-		number_label.modulate = Color("#9e0000")
-	else:
-		number_label.modulate = Color("#9e0000")
+	#if current_score > 13:
+		#number_label.modulate = Color("#9e0000")
+	#else:
+		#number_label.modulate = Color("#9e0000")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
