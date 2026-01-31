@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/enemy_chara.gd" id="1_nk8xn"]
 [ext_resource type="Texture2D" uid="uid://dby442a867d2d" path="res://Assets/Enemies.png" id="2_nk8xn"]
+[ext_resource type="Script" uid="uid://bqgx2yg2tv0g2" path="res://Scripts/enemy_sprite.gd" id="3_3vw1x"]
 
 [node name="EnemyChara" type="Node2D" unique_id=793926884]
 script = ExtResource("1_nk8xn")
@@ -10,3 +11,4 @@ script = ExtResource("1_nk8xn")
 texture = ExtResource("2_nk8xn")
 region_enabled = true
 region_rect = Rect2(960, 0, 192, 192)
+script = ExtResource("3_3vw1x")
