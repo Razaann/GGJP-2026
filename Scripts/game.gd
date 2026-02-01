@@ -9,6 +9,8 @@ const CARD_VALUE = preload("res://Scenes/card_value.tscn")
 @onready var end_button: TextureButton = $UI/EndButton
 @onready var draw_buttonn: TextureButton = $UI/DrawButtonn
 
+@onready var ui_label: Label = $UI/UILabel
+
 var score_ui_player = null
 var score_ui_enemy = null
 
@@ -22,9 +24,11 @@ func _ready() -> void:
 	score_ui_enemy = CARD_VALUE.instantiate()
 	add_child(score_ui_enemy)
 	score_ui_enemy.position = Vector2(900, 120)
-	draw_card()
-	draw_card()
 	
+	ui_label.modulate = Color("#d9d9d9")
+	
+	draw_card()
+	draw_card()
 	draw_enemy_card()
 
 
@@ -109,6 +113,15 @@ func update_score():
 	# Update the UI
 	if score_ui_player != null:
 		score_ui_player.update_display(total_score)
+	
+	if total_score > 21:
+		print("INSTANT BUST!")
+		ui_label.text = str("YOU BUSTED")
+		# 1. Disable buttons immediately
+		draw_buttonn.disabled = true
+		end_button.disabled = true
+		await get_tree().create_timer(1.0).timeout
+		evaluate_winner()
 
 func update_enemy_score():
 	var total_score = 0
@@ -158,6 +171,7 @@ func evaluate_winner():
 	# Scenario 1 Player bust
 	if player_score > 21:
 		print("PLAYER BUSTED! Enemy attacks freely.")
+		ui_label.text = str("Enemy attacks freely")
 		# Penalty: Enemy hits you with their full score? Or a flat amount?
 		damage = enemy_score 
 		take_damage(damage)
@@ -168,6 +182,7 @@ func evaluate_winner():
 	# Scenario 2 Enemy bust
 	if enemy_score > 21:
 		print("ENEMY BUSTED! Player attacks freely.")
+		ui_label.text = str("ENEMY BUSTED! You attacks freely")
 		damage = player_score
 		deal_damage(damage)
 		await get_tree().create_timer(3.0).timeout # Let player read the result
@@ -178,6 +193,7 @@ func evaluate_winner():
 	if player_score > enemy_score:
 		damage = player_score - enemy_score
 		print("Player Wins! Dealing ", damage, " damage.")
+		ui_label.text = str("Player Wins! Dealing ", damage, " damage")
 		deal_damage(damage)
 		await get_tree().create_timer(3.0).timeout # Let player read the result
 		restart_round()
@@ -185,12 +201,14 @@ func evaluate_winner():
 	elif enemy_score > player_score:
 		damage = enemy_score - player_score
 		print("Enemy Wins! Taking ", damage, " damage.")
+		ui_label.text = str("Enemy Wins! Taking ", damage, " damage")
 		take_damage(damage)
 		await get_tree().create_timer(3.0).timeout # Let player read the result
 		restart_round()
 		return
 	else:
 		print("It's A Draw")
+		ui_label.text = str("It's A Draw")
 		await get_tree().create_timer(3.0).timeout # Let player read the result
 		restart_round()
 		return
@@ -214,6 +232,8 @@ func restart_round():
 		tween.tween_property(card, "position:y", -200, 0.5)\
 			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 		tween.tween_property(card, "modulate:a", 0.0, 0.3)
+	
+	ui_label.text = str("")
 	
 	# 4. Wait for animation to finish
 	await tween.finished
