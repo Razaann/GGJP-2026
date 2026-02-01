@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dbaosjii46v5i"]
+
+[ext_resource type="Shader" uid="uid://dhplus0hof4wu" path="res://Scripts/game.gdshader" id="1_rguab"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cbbuc"]
+shader = ExtResource("1_rguab")
+shader_parameter/speed = 0.5
+shader_parameter/density = 10.0
+shader_parameter/spiral_strength = 2.0
+shader_parameter/color_dark = Color(0.062622264, 0.062577285, 0.11445976, 1)
+shader_parameter/color_light = Color(0.3690607, 0.31475782, 0.3853072, 1)
+
+[node name="RewardScene" type="Control" unique_id=1886498646]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="." unique_id=1043944443]
+material = SubResource("ShaderMaterial_cbbuc")
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

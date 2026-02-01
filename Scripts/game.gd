@@ -1,5 +1,24 @@
 extends Node2D
 
+enum MaskType { 
+	NONE, 
+	MANIAC, 
+	NARCISSISM, 
+	VENGEANCE, 
+	OBSESSION, 
+	SMUG, 
+	EUPHORIA, 
+	BLACK_RAGE,
+	SHAME, 
+	TORMENT 
+}
+
+# CHANGE THIS to test different masks!
+var current_mask: MaskType = MaskType.NONE 
+
+# State variables for specific masks
+var damage_taken_last_turn: bool = false # For Vengeance
+
 const CARD_SCENE = preload("res://Scenes/cardd.tscn")
 const CARD_VALUE = preload("res://Scenes/card_value.tscn")
 
@@ -23,7 +42,7 @@ const CARD_VALUE = preload("res://Scenes/card_value.tscn")
 	$SFX/WhooshSFX3
 	]
 
-const MAX_HP = 25
+var MAX_HP = 25
 
 var player_hp = MAX_HP
 var enemy_hp = MAX_HP
@@ -63,6 +82,12 @@ func draw_card():
 	var card_count = player_hand.get_child_count() + 1
 	if card_count >= 5: # Limits to 5 cards (0, 1, 2, 3, 4)
 		return
+	if current_mask == MaskType.SHAME:
+		take_damage(1)
+		print("Mask of Shame: Took 1 damage for drawing.")
+		# If you die from drawing, stop here!
+		if player_hp <= 0: return
+	
 	var random_value = randi_range(1, 10)
 	var new_card = CARD_SCENE.instantiate()
 	
@@ -200,6 +225,48 @@ func evaluate_winner():
 	
 	var damage = 0
 	
+	var player_limit = 21
+	if current_mask == MaskType.MANIAC:
+		player_limit = 19
+	
+	# --- 1. CHECK BUSTS ---
+	if player_score > player_limit:
+		print("PLAYER BUSTED!")
+		damage = enemy_score
+		
+		# Mask of Narcissism: Extra punishment for losing
+		if current_mask == MaskType.NARCISSISM:
+			damage += 2
+			
+		take_damage(damage)
+		damage_taken_last_turn = true # Mark for Vengeance next turn
+	
+	elif enemy_score > 21:
+		print("ENEMY BUSTED!")
+		damage = calculate_attack_damage(player_score)
+		deal_damage(damage)
+		damage_taken_last_turn = false
+	
+	else:
+		if player_score > enemy_score:
+			damage = calculate_attack_damage(player_score - enemy_score)
+			deal_damage(damage)
+			damage_taken_last_turn = false
+		
+		elif enemy_score > player_score:
+			damage = enemy_score - player_score
+			take_damage(damage)
+			damage_taken_last_turn = true
+		
+		else:
+			# --- MASK: SMUG (Win Ties) ---
+			if current_mask == MaskType.SMUG:
+				print("Mask of Smug: Tie becomes a WIN!")
+				damage = calculate_attack_damage(1) # Deal 1 damage on tie
+				deal_damage(damage)
+			else:
+				print("It's a Draw")
+	
 	# Scenario 1 Player bust
 	if player_score > 21:
 		print("PLAYER BUSTED! Enemy attacks freely.")
@@ -245,6 +312,50 @@ func evaluate_winner():
 		restart_round()
 		return
 
+
+# Helper to calculate bonus damage
+func calculate_attack_damage(base_dmg: int) -> int:
+	var final_dmg = base_dmg
+	
+	match current_mask:
+		MaskType.MANIAC:
+			final_dmg += 2
+		MaskType.TORMENT:
+			final_dmg += 5
+		MaskType.BLACK_RAGE:
+			final_dmg += 3 # High aggression
+		MaskType.VENGEANCE:
+			if damage_taken_last_turn:
+				final_dmg *= 2 # Double damage if hurt previously!
+				print("Vengeance Activated!")
+				
+	# --- MASK: NARCISSISM (Heal on Win) ---
+	if current_mask == MaskType.NARCISSISM and final_dmg > 0:
+		heal_player(2)
+		
+	return final_dmg
+
+func heal_player(amount: int):
+	# 1. Increase HP
+	player_hp += amount
+
+	# 2. Safety Clamp: Never go above Max HP
+	# (Note: If you are using the Torment mask, make sure MAX_HP is a variable, not a const!)
+	if player_hp > MAX_HP:
+		player_hp = MAX_HP
+		
+	print("Healed! HP is now: ", player_hp)
+
+	# 3. Visual Feedback (Flash Green)
+	if player_sprite:
+		var tween = create_tween()
+		# Flash to Green
+		tween.tween_property(player_sprite, "modulate", Color(0.5, 2.0, 0.5), 0.2) 
+		# Fade back to Normal
+		tween.tween_property(player_sprite, "modulate", Color.WHITE, 0.2)
+
+	# 4. Update the UI
+	update_hp_ui()
 
 
 func restart_round():
@@ -358,10 +469,10 @@ func play_random_whoosh():
 
 func update_hp_ui():
 	if player_hp_label:
-		player_hp_label.text = "HP: " + str(player_hp) + "/" + str(MAX_HP)
-
+		player_hp_label.text = "HP: " + str(max(player_hp, 0)) + "/" + str(MAX_HP)
+	
 	if enemy_hp_label:
-		enemy_hp_label.text = "HP: " + str(enemy_hp) + "/" + str(MAX_HP)
+		enemy_hp_label.text = "HP: " + str(max(enemy_hp, 0)) + "/" + str(MAX_HP)
 
 func play_shake_anim(target: Node2D, intensity: float = 10.0, duration: float = 0.4):
 	# 1. Store original values so we don't "drift"
@@ -402,6 +513,20 @@ func play_shake_anim(target: Node2D, intensity: float = 10.0, duration: float = 
 	
 	tween.parallel().tween_property(target, "offset", original_offset, 0.1)
 	tween.parallel().tween_property(target, "rotation", 0.0, 0.1)
+
+
+func apply_passive_mask_stats():
+	MAX_HP = 25
+	match current_mask:
+		MaskType.TORMENT:
+			MAX_HP = 12
+			player_hp = 12
+			print("Mask Of Torment: HP Halved")
+		
+		MaskType.EUPHORIA:
+			# Start with a free low card
+			print("Mask of Euphoria: Starting with extra card")
+			draw_card()
 
 
 func _on_draw_buttonn_pressed() -> void:
