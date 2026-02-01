@@ -34,6 +34,7 @@ var score_ui_enemy = null
 @onready var player_sprite: Sprite2D = $Characters/PlayerChara/Sprite2D
 @onready var enemy_sprite: Sprite2D = $Characters/EnemyChara/Sprite2D
 
+@onready var music_bg: AudioStreamPlayer2D = $SFX/MusicBG
 
 func _ready() -> void:
 	# Player card set up
@@ -47,6 +48,9 @@ func _ready() -> void:
 	score_ui_enemy.position = Vector2(900, 120)
 	
 	ui_label.modulate = Color("#d9d9d9")
+	
+	music_bg.stream = load("res://Assets/audio/boss battle.wav")
+	music_bg.play()  # If not set to autoplay
 	
 	update_hp_ui()
 	

@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://dgijnja8j70fo" path="res://Assets/audio/whoosh_1769910700140.wav" id="7_v158k"]
 [ext_resource type="AudioStream" uid="uid://pgq5dpokv3fe" path="res://Assets/audio/whoosh_1769911338383.wav" id="8_v158k"]
 [ext_resource type="AudioStream" uid="uid://c38cchjo2xpx7" path="res://Assets/audio/slash_1769894928142.wav" id="9_h4fw4"]
+[ext_resource type="AudioStream" uid="uid://dt4100uwsy3rq" path="res://Assets/audio/boss battle.wav" id="10_ldgsr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wrm1d"]
 shader = ExtResource("2_qxrlw")
@@ -147,6 +148,11 @@ stream = ExtResource("8_v158k")
 
 [node name="AttackSFX" type="AudioStreamPlayer2D" parent="SFX" unique_id=1431057877]
 stream = ExtResource("9_h4fw4")
+
+[node name="MusicBG" type="AudioStreamPlayer2D" parent="SFX" unique_id=659444763]
+stream = ExtResource("10_ldgsr")
+volume_db = 16.0
+autoplay = true
 
 [connection signal="pressed" from="UI/EndButton" to="." method="_on_end_button_pressed"]
 [connection signal="pressed" from="UI/DrawButtonn" to="." method="_on_draw_buttonn_pressed"]
