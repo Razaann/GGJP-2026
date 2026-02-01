@@ -10,9 +10,30 @@ const CARD_VALUE = preload("res://Scenes/card_value.tscn")
 @onready var draw_buttonn: TextureButton = $UI/DrawButtonn
 
 @onready var ui_label: Label = $UI/UILabel
+@onready var player_hp_label: Label = $UI/PlayerHP
+@onready var enemy_hp_label: Label = $UI/EnemyHP
+
+
+@onready var whoosh_sfx: AudioStreamPlayer2D = $SFX/WhooshSFX
+@onready var whoosh_sfx_2: AudioStreamPlayer2D = $SFX/WhooshSFX2
+
+@onready var whoosh_sounds = [
+	$SFX/WhooshSFX, 
+	$SFX/WhooshSFX2, 
+	$SFX/WhooshSFX3
+	]
+
+const MAX_HP = 25
+
+var player_hp = MAX_HP
+var enemy_hp = MAX_HP
 
 var score_ui_player = null
 var score_ui_enemy = null
+
+@onready var player_sprite: Sprite2D = $Characters/PlayerChara/Sprite2D
+@onready var enemy_sprite: Sprite2D = $Characters/EnemyChara/Sprite2D
+
 
 func _ready() -> void:
 	# Player card set up
@@ -26,6 +47,8 @@ func _ready() -> void:
 	score_ui_enemy.position = Vector2(900, 120)
 	
 	ui_label.modulate = Color("#d9d9d9")
+	
+	update_hp_ui()
 	
 	draw_card()
 	draw_card()
@@ -56,6 +79,8 @@ func draw_card():
 	# 4. Create the Tween
 	var tween = create_tween()
 	
+	play_random_whoosh()
+	
 	# Slide Up: Use TRANS_BACK and EASE_OUT for a "bouncy" landing
 	tween.tween_property(new_card, "position", Vector2(final_x, final_y), 0.4)\
 		.set_trans(Tween.TRANS_BACK)\
@@ -70,7 +95,8 @@ func draw_card():
 
 func draw_enemy_card():
 	var card_count = enemy_hand.get_child_count() + 1
-	if card_count >= 5: return
+	if enemy_hand.get_child_count() > 5: 
+		return
 	
 	var random_value = randi_range(1, 10)
 	var new_card = CARD_SCENE.instantiate()
@@ -87,6 +113,8 @@ func draw_enemy_card():
 	
 	# 4. Create the Tween
 	var tween = create_tween()
+	
+	play_random_whoosh()
 	
 	# Slide Up: Use TRANS_BACK and EASE_OUT for a "bouncy" landing
 	tween.tween_property(new_card, "position", Vector2(final_x, final_y), 0.4)\
@@ -138,14 +166,14 @@ func update_enemy_score():
 func start_enemy_turn():
 	print ("Enemy Turn")
 	
-	while true:
+	while enemy_hand.get_child_count() < 4:
 		var current_enemy_score = get_hand_total(enemy_hand)
 		
 		print ("Enemy Score", current_enemy_score)
 		
 		if current_enemy_score >= 17 or current_enemy_score > 21:
 			break
-		
+			
 		draw_enemy_card()
 		await get_tree().create_timer(1.0).timeout
 		
@@ -262,12 +290,114 @@ func restart_round():
 
 # Placeholder functions for your future HP system
 func take_damage(amount: int):
-	print("Ouch! Took ", amount, " damage.")
-	# Add your HP reduction code here later
+	player_hp -= amount
+	print("Ouch! Player took ", amount, " damage. HP: ", player_hp)
+	
+	# SHAKE THE PLAYER (The Victim)
+	if player_sprite:
+		play_shake_anim(player_sprite)
+		
+		# Flash Red for extra "Pain" feel
+		var tween = create_tween()
+		tween.tween_property(player_sprite, "modulate", Color(10, 0, 0), 0.1) # Flash BRIGHT Red
+		tween.tween_property(player_sprite, "modulate", Color.WHITE, 0.2)
+	
+	# Visual Shake? Flash Red? Add juice here later.
+	update_hp_ui()
+	check_game_over()
 
 func deal_damage(amount: int):
-	print("Bam! Dealt ", amount, " damage.")
-	# Add enemy HP reduction code here later
+	enemy_hp -= amount
+	print("Bam! Enemy took ", amount, " damage. HP: ", enemy_hp)
+	
+	# SHAKE THE ENEMY (The Victim)
+	if enemy_sprite:
+		play_shake_anim(enemy_sprite)
+		
+		# Flash White/Red for impact
+		var tween = create_tween()
+		tween.tween_property(enemy_sprite, "modulate", Color(10, 10, 10), 0.1) # Flash BRIGHT White
+		tween.tween_property(enemy_sprite, "modulate", Color.WHITE, 0.2)
+	
+	update_hp_ui()
+	check_game_over()
+
+func check_game_over():
+	if player_hp <= 0:
+		print("GAME OVER - YOU DIED")
+		game_over("LOSE")
+
+	elif enemy_hp <= 0:
+		print("VICTORY - ENEMY SLAIN")
+		game_over("WIN")
+
+func game_over(result: String):
+	# Stop the game flow
+	draw_buttonn.disabled = true
+	end_button.disabled = true
+	
+	# Create a simple Tween to show a "Fade Out" or just restart
+	if result == "WIN":
+		# Maybe show a "You Win" label here?
+		pass 
+	else:
+		# Maybe show a "You Died" label here?
+		pass
+	# For now, just reload the scene after 2 seconds
+	await get_tree().create_timer(2.0).timeout
+	get_tree().reload_current_scene()
+
+func play_random_whoosh():
+	var random_sound = whoosh_sounds.pick_random()
+	random_sound.play()
+
+
+func update_hp_ui():
+	if player_hp_label:
+		player_hp_label.text = "HP: " + str(player_hp) + "/" + str(MAX_HP)
+
+	if enemy_hp_label:
+		enemy_hp_label.text = "HP: " + str(enemy_hp) + "/" + str(MAX_HP)
+
+func play_shake_anim(target: Node2D, intensity: float = 10.0, duration: float = 0.4):
+	# 1. Store original values so we don't "drift"
+	var original_scale = target.scale
+	# We shake 'offset' so we don't mess up the actual 'position' of the character
+	# Ensure your Sprite2D offset is normally (0,0)
+	var original_offset = target.offset 
+	
+	var tween = create_tween()
+	
+	# --- PHASE 1: THE SWELL (Balatro Style) ---
+	# Scale up slightly right before the shake (anticipation/impact)
+	$SFX/AttackSFX.play()
+	tween.tween_property(target, "scale", original_scale * 1.2, 0.05)\
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	
+	# --- PHASE 2: THE SHAKE ---
+	# We manually shake for the duration
+	var steps = 10 # How many "shakes" happen
+	var step_duration = duration / steps
+	
+	for i in range(steps):
+		# Create a random offset for "violent" vibration
+		var random_x = randf_range(-intensity, intensity)
+		var random_y = randf_range(-intensity, intensity)
+		var random_rot = randf_range(-0.1, 0.1) # Slight rotation shake
+		
+		# Shake Position (Offset)
+		tween.tween_property(target, "offset", Vector2(random_x, random_y), step_duration)
+		
+		# Parallel Shake Rotation
+		tween.parallel().tween_property(target, "rotation", random_rot, step_duration)
+	
+	# --- PHASE 3: THE SNAP BACK ---
+	# Reset everything to normal
+	tween.tween_property(target, "scale", original_scale, 0.1)\
+		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	
+	tween.parallel().tween_property(target, "offset", original_offset, 0.1)
+	tween.parallel().tween_property(target, "rotation", 0.0, 0.1)
 
 
 func _on_draw_buttonn_pressed() -> void:
