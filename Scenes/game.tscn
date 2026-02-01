@@ -4,7 +4,6 @@
 [ext_resource type="Shader" path="res://Scripts/game.gdshader" id="2_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://gvfnynnibiwq" path="res://Scenes/player_chara.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://dsb7f3ykmdwx3" path="res://Scenes/enemy_chara.tscn" id="4_3dryh"]
-[ext_resource type="Script" uid="uid://buobnvk3y6mx" path="res://Scripts/player_hand.gd" id="6_i6g32"]
 [ext_resource type="Texture2D" uid="uid://esuj0jhfelue" path="res://Assets/LongButtonn.png" id="7_1l0tm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wrm1d"]
@@ -67,7 +66,8 @@ position = Vector2(1120, 352)
 [node name="CardManager" type="Node2D" parent="." unique_id=182927379]
 
 [node name="PlayerHand" type="Node2D" parent="." unique_id=1300258234]
-script = ExtResource("6_i6g32")
+
+[node name="EnemyHand" type="Node2D" parent="." unique_id=2083304120]
 
 [node name="UI" type="Node" parent="." unique_id=522070777]
 
@@ -103,4 +103,5 @@ grow_vertical = 2
 texture_normal = SubResource("AtlasTexture_h4fw4")
 texture_pressed = SubResource("AtlasTexture_o5yvi")
 
+[connection signal="pressed" from="UI/EndButton" to="." method="_on_end_button_pressed"]
 [connection signal="pressed" from="UI/DrawButtonn" to="." method="_on_draw_buttonn_pressed"]
