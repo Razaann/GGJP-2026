@@ -34,7 +34,7 @@ func _ready() -> void:
 
 func draw_card():
 	var card_count = player_hand.get_child_count() + 1
-	if card_count >= 6: # Limits to 5 cards (0, 1, 2, 3, 4)
+	if card_count >= 5: # Limits to 5 cards (0, 1, 2, 3, 4)
 		return
 	var random_value = randi_range(1, 10)
 	var new_card = CARD_SCENE.instantiate()
@@ -70,7 +70,7 @@ func draw_card():
 
 func draw_enemy_card():
 	var card_count = enemy_hand.get_child_count() + 1
-	if card_count >= 6: return
+	if card_count >= 5: return
 	
 	var random_value = randi_range(1, 10)
 	var new_card = CARD_SCENE.instantiate()

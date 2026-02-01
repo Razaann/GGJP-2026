@@ -105,9 +105,9 @@ texture_normal = SubResource("AtlasTexture_h4fw4")
 texture_pressed = SubResource("AtlasTexture_o5yvi")
 
 [node name="UILabel" type="Label" parent="UI" unique_id=1420213697]
-offset_left = 320.0
+offset_left = 384.0
 offset_top = 256.0
-offset_right = 960.0
+offset_right = 896.0
 offset_bottom = 448.0
 theme_override_fonts/font = ExtResource("6_i6g32")
 theme_override_font_sizes/font_size = 32

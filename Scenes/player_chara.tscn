@@ -1,10 +1,20 @@
 [gd_scene format=3 uid="uid://gvfnynnibiwq"]
 
-[ext_resource type="Script" uid="uid://e4pxlgpkkh28" path="res://Scripts/player_chara.gd" id="1_eib25"]
+[ext_resource type="Script" path="res://Scripts/player_chara.gd" id="1_eib25"]
 [ext_resource type="Texture2D" uid="uid://b32yngbmyupcu" path="res://Assets/Chara.png" id="1_tkd2r"]
+[ext_resource type="Shader" uid="uid://b42cxlvy0t3u6" path="res://Scripts/outline_chara.gdshader" id="2_biclk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lsl2o"]
+shader = ExtResource("2_biclk")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 2.50000011875
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = true
 
 [node name="PlayerChara" type="Node2D" unique_id=218262183]
 script = ExtResource("1_eib25")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1317590605]
+material = SubResource("ShaderMaterial_lsl2o")
 texture = ExtResource("1_tkd2r")
